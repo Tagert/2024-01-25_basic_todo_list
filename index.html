@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Todo application</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="main-side-section">
+      <div class="container">
+        <div class="cards add-task-side">
+          <div class="main-title">
+            <h1>Todo list: application</h1>
+          </div>
+          <div class="form">
+            <div class="title">
+              <label>Add your title:</label>
+              <input id="title" placeholder="Enter a title for this card..." />
+            </div>
+            <div class="text-area">
+              <label>Add your description:</label>
+              <textarea
+                name="text-area"
+                id="text-area"
+                cols="30"
+                rows="5"
+                placeholder="Your description here..."
+              ></textarea>
+            </div>
+            <div class="add-button">
+              <button id="add-button">
+                <p>Add a card</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards in-progress-card">
+          <div class="main-title">
+            <h2 class="h2-title">In progress</h2>
+          </div>
+          <div class="card-content">
+            <!-- <div class="added-card">
+              <p>Test1</p>
+              <p>
+                Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Ipsum quibusdam necessitatibus
+                nemo, dolorum, veniam corporis suscipit repudiandae nesciunt
+                accusamus consequatur laborum soluta veritatis, accusantium
+                atque velit vero. Unde, reiciendis nostrum.
+              </p>
+              <div class="bottom-circle">
+                <button>
+                  <p class="button-paragraph">Click</p>
+                </button>
+                <div class="color-check"></div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="cards done-card">
+          <div class="main-title">
+            <h2>Done</h2>
+          </div>
+          <div class="card-content"></div>
+        </div>
+      </div>
+    </section>
+    <script src="./script.js"></script>
+  </body>
+</html>
