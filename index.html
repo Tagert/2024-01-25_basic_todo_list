@@ -9,29 +9,61 @@
   <body>
     <section class="main-side-section">
       <div class="container">
-        <div class="cards add-task-side">
-          <div class="main-title">
-            <h1>Todo list: application</h1>
+        <div class="left-side">
+          <div class="cards add-task-side">
+            <div class="main-title">
+              <h1>Todo list: application</h1>
+            </div>
+            <div class="form">
+              <div class="title">
+                <label>Add your title:</label>
+                <input
+                  id="title"
+                  placeholder="Enter a title for this card..."
+                />
+              </div>
+              <div class="text-area">
+                <label>Add your description:</label>
+                <textarea
+                  name="text-area"
+                  id="text-area"
+                  cols="30"
+                  rows="5"
+                  placeholder="Your description here..."
+                ></textarea>
+              </div>
+              <div class="add-button">
+                <button id="add-button">
+                  <p>Add a card</p>
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="form">
-            <div class="title">
-              <label>Add your title:</label>
-              <input id="title" placeholder="Enter a title for this card..." />
-            </div>
-            <div class="text-area">
-              <label>Add your description:</label>
-              <textarea
-                name="text-area"
-                id="text-area"
-                cols="30"
-                rows="5"
-                placeholder="Your description here..."
-              ></textarea>
-            </div>
-            <div class="add-button">
-              <button id="add-button">
-                <p>Add a card</p>
-              </button>
+
+          <div class="main-title">
+            <h1>Removed list:</h1>
+          </div>
+          <div class="cards removed-card-list">
+            <div class="removed-card">
+              <div class="remove-symbol">
+                <div class="wrap">
+                  <img
+                    src="./assets/arrow_direction_down_navigation_icon.svg"
+                    alt=""
+                  />
+                </div>
+
+                <div class="modify">
+                  <img src="./assets/arrow_next_right_icon.svg" alt="" />
+                  <img src="./assets/forever-remove_icon.svg" alt="" />
+                </div>
+              </div>
+              <div class="card-title">
+                <p>
+                  Test3 (no functionality yet, the next challenge is to make
+                  it............)
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -40,24 +72,7 @@
           <div class="main-title">
             <h2 class="h2-title">In progress</h2>
           </div>
-          <div class="card-content">
-            <!-- <div class="added-card">
-              <p>Test1</p>
-              <p>
-                Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Ipsum quibusdam necessitatibus
-                nemo, dolorum, veniam corporis suscipit repudiandae nesciunt
-                accusamus consequatur laborum soluta veritatis, accusantium
-                atque velit vero. Unde, reiciendis nostrum.
-              </p>
-              <div class="bottom-circle">
-                <button>
-                  <p class="button-paragraph">Click</p>
-                </button>
-                <div class="color-check"></div>
-              </div>
-            </div> -->
-          </div>
+          <div class="card-content"></div>
         </div>
 
         <div class="cards done-card">

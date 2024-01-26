@@ -1,20 +1,5 @@
 "use strict";
 
-// 1. Sukurti paprastą formą su input bei button;
-// 2. Padaryt, kad paspaudus ant button consolėje būtu išvestas tekstas įvestas input'e;
-// 3. Ekrane atvaizduot objektą kuriame yra title, isDone ir creationDate;
-// 4. Pridėti minimalią validaciją, padaryt, kad consolėj atsirastu informacinė žinutė vietoj objekto jeigu task title bus trumpesnis už 3 simbolius;
-// 5. Sukurti masyvą bei sukurtus bei pravaliduotus objektus dėti į masyvą;
-// 6. forEach pagalba atvaizduoti task title consolej;
-// 7. Prieš atvaizduojant taskTitle į ekraną jį reikia pridėti į prie taskCard komponento, tik tada taskCard pridėt į ekraną;
-// 8. Jeigu task yra atliktas - ekrane turi atsirast žalias mažasapskritimas, jei task nėra atliktas - turi atsirast raudonas apskritimas;
-// 9. Task kortelei pridėti stilių klasę per JS. Stiliai turi apjuost border'iu task'o kortelę.
-// 10. Paspaudus ant korelės -card-c atvaizdoti consolėj task title;
-// 11. Padaryt, kad naujausiai pridėta task kortelė būtu viršuje (prieš forEach reiks panaudot reverse() metodą);
-// 12. Rasti bei atvaizduoti paspaustos kortelės index'ą;
-// 13. Pamodifikuot task status reikšmę masyve kreipantis į teisingo indexo narį;
-// 14. Atnaujintą objektą atvaizduoti consolėj;
-
 const cardTitle = document.getElementById("title");
 const cardDescription = document.getElementById("text-area");
 const addButton = document.getElementById("add-button");
@@ -22,12 +7,33 @@ const inProgressCard = document.querySelector(
   ".in-progress-card > .card-content"
 );
 const doneCard = document.querySelector(".done-card > .card-content");
-const toDoTaskArray = [];
-const doneArray = [];
+const removedCardList = document.querySelector(".removed-card-list");
+
+const localStorageTasksToDo =
+  JSON.parse(localStorage.getItem("toDoTaskArray")) || [];
+console.log(localStorageTasksToDo);
+const localStorageTasksDone =
+  JSON.parse(localStorage.getItem("doneArray")) || [];
+console.log(localStorageTasksDone);
+
+const toDoTaskArray = localStorageTasksToDo;
+const doneArray = localStorageTasksDone;
 
 const createCard = (task, container) => {
   const addDivCard = document.createElement("div");
   addDivCard.classList.add("added-card");
+
+  const addSymbolRemoveDiv = document.createElement("div");
+  addSymbolRemoveDiv.classList.add("remove-symbol"); //////////////
+
+  const addSymbolRemoveImage = document.createElement("img");
+  addSymbolRemoveImage.src = "./assets/close_delete_remove_icon.svg"; /////////
+  addSymbolRemoveImage.addEventListener("click", () =>
+    removeCard(task, container)
+  );
+
+  const cardTitleDiv = document.createElement("div");
+  cardTitleDiv.classList.add("card-title"); //////////////////
 
   const titleParagraph = document.createElement("p");
   const addCardTitle = task.title;
@@ -47,17 +53,26 @@ const createCard = (task, container) => {
   const statusButton = document.createElement("button");
 
   const colorDiv = document.createElement("div");
-  colorDiv.classList.add("color-check");
+
+  const removedCardContainer = document.createElement("div");
+  removedCardContainer.classList.add("removed-card");
 
   container.append(addDivCard); // reverse method container.prepend(addDivCard)
-  addDivCard.append(titleParagraph, descriptionParagraph, buttonDiv);
+  addDivCard.append(
+    addSymbolRemoveDiv,
+    cardTitleDiv,
+    descriptionParagraph,
+    buttonDiv
+  );
+  cardTitleDiv.append(titleParagraph);
+  addSymbolRemoveDiv.append(addSymbolRemoveImage);
   buttonDiv.append(statusButton, colorDiv);
   statusButton.append(buttonParagraph);
 
   if (task.isDone === true) {
-    colorDiv.style.borderColor = "#B7E5B4";
+    colorDiv.setAttribute("class", "color-check-green");
   } else {
-    colorDiv.style.borderColor = "#f28585";
+    colorDiv.setAttribute("class", "color-check-red");
   }
 
   if (container === doneCard) {
@@ -65,6 +80,9 @@ const createCard = (task, container) => {
   } else {
     buttonDiv.addEventListener("click", () => moveCardToDone(task));
   }
+
+  localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
+  localStorage.setItem("doneArray", JSON.stringify(doneArray));
 };
 
 const addCardFunc = () => {
@@ -83,8 +101,32 @@ const addCardFunc = () => {
     console.log("Please enter more than 3 letters");
   }
 
+  localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
+
   cardTitle.value = "";
   cardDescription.value = "";
+};
+
+const removeCard = (task, container) => {
+  const index =
+    container === inProgressCard
+      ? toDoTaskArray.findIndex((t) => t.title === task.title)
+      : doneArray.findIndex((t) => t.title === task.title);
+
+  if (index !== -1) {
+    container.innerHTML = "";
+
+    if (container === inProgressCard) {
+      toDoTaskArray.splice(index, 1);
+      toDoTaskArray.forEach((t) => createCard(t, inProgressCard));
+    } else {
+      doneArray.splice(index, 1);
+      doneArray.forEach((t) => createCard(t, doneCard));
+    }
+  }
+
+  localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
+  localStorage.setItem("doneArray", JSON.stringify(doneArray));
 };
 
 const moveCardToDone = (task) => {
@@ -98,7 +140,7 @@ const moveCardToDone = (task) => {
 
     inProgressCard.innerHTML = "";
     doneCard.innerHTML = "";
-
+    localStorage.setItem("doneArray", JSON.stringify(doneArray));
     toDoTaskArray.forEach((task) => createCard(task, inProgressCard));
     doneArray.forEach((task) => createCard(task, doneCard));
   }
@@ -121,6 +163,9 @@ const moveCardToInProgress = (task) => {
     doneArray.forEach((task) => createCard(task, doneCard));
   }
 };
+
+toDoTaskArray.forEach((task) => createCard(task, inProgressCard));
+doneArray.forEach((task) => createCard(task, doneCard));
 
 cardTitle.value = "";
 cardDescription.value = "";
