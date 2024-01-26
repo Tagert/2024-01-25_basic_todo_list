@@ -19,12 +19,18 @@ label {
 }
 
 body {
+  position: relative;
   height: 100vh;
   font-size: 1.15rem;
   letter-spacing: 0.15rem;
   font-family: "Caveat", cursive;
+  background-image: url(./assets/sl_072622_51930_13.jpg);
+  background-size: 35%;
+  z-index: -1;
 
   .main-side-section {
+    position: relative;
+    z-index: 10;
     .container {
       display: flex;
       justify-content: center;
@@ -36,6 +42,7 @@ body {
       .left-side {
         display: flex;
         flex-direction: column;
+        gap: 2rem;
         height: 100%;
 
         .main-title {
@@ -46,7 +53,7 @@ body {
         }
 
         .removed-card-list {
-          min-height: 29.6rem;
+          min-height: 31.95rem;
 
           .removed-card {
             display: flex;
@@ -56,6 +63,11 @@ body {
             border-radius: 0.65rem;
             padding: 1.2rem;
             box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+            background-image: url(./assets/thumbstack.png);
+            background-size: 10%;
+            background-position: 50% 0%;
+            background-repeat: no-repeat;
+            background-color: rgb(255, 234, 167);
 
             .remove-symbol {
               display: flex;
@@ -114,7 +126,8 @@ body {
         padding: 1.5rem 2rem;
         border: 0.1rem solid black;
         border-radius: 0.65rem;
-        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.15);
+        background-color: rgb(255, 187, 100, 0.85);
 
         .card-content {
           display: flex;
@@ -129,6 +142,11 @@ body {
             border-radius: 0.65rem;
             padding: 1.2rem;
             box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+            background-image: url(./assets/thumbstack.png);
+            background-size: 10%;
+            background-position: 50% 0%;
+            background-repeat: no-repeat;
+            background-color: rgb(255, 234, 167);
 
             .remove-symbol {
               display: flex;
@@ -237,6 +255,13 @@ body {
               border: 1px solid black;
               outline: none;
               padding: 0.3rem;
+              box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+
+              &::placeholder {
+                font-size: 1rem;
+                letter-spacing: 0.05rem;
+                font-family: "Caveat", cursive;
+              }
             }
           }
 
@@ -248,6 +273,13 @@ body {
               resize: none;
               border-radius: 0.32rem;
               padding: 0.3rem;
+              box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+
+              &::placeholder {
+                font-size: 1rem;
+                letter-spacing: 0.05rem;
+                font-family: "Caveat", cursive;
+              }
             }
           }
 

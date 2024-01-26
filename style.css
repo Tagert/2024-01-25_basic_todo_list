@@ -18,10 +18,18 @@ label {
 }
 
 body {
+  position: relative;
   height: 100vh;
   font-size: 1.15rem;
   letter-spacing: 0.15rem;
   font-family: "Caveat", cursive;
+  background-image: url(./assets/sl_072622_51930_13.jpg);
+  background-size: 35%;
+  z-index: -1;
+}
+body .main-side-section {
+  position: relative;
+  z-index: 10;
 }
 body .main-side-section .container {
   display: flex;
@@ -34,6 +42,7 @@ body .main-side-section .container {
 body .main-side-section .container .left-side {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
   height: 100%;
 }
 body .main-side-section .container .left-side .main-title:nth-child(2) {
@@ -41,7 +50,7 @@ body .main-side-section .container .left-side .main-title:nth-child(2) {
   padding-bottom: 0.2rem;
 }
 body .main-side-section .container .left-side .removed-card-list {
-  min-height: 29.6rem;
+  min-height: 31.95rem;
 }
 body .main-side-section .container .left-side .removed-card-list .removed-card {
   display: flex;
@@ -51,6 +60,11 @@ body .main-side-section .container .left-side .removed-card-list .removed-card {
   border-radius: 0.65rem;
   padding: 1.2rem;
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+  background-image: url(./assets/thumbstack.png);
+  background-size: 10%;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  background-color: rgb(255, 234, 167);
 }
 body .main-side-section .container .left-side .removed-card-list .removed-card .remove-symbol {
   display: flex;
@@ -96,7 +110,8 @@ body .main-side-section .container .cards {
   padding: 1.5rem 2rem;
   border: 0.1rem solid black;
   border-radius: 0.65rem;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 187, 100, 0.85);
 }
 body .main-side-section .container .cards .card-content {
   display: flex;
@@ -111,6 +126,11 @@ body .main-side-section .container .cards .card-content .added-card {
   border-radius: 0.65rem;
   padding: 1.2rem;
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.35);
+  background-image: url(./assets/thumbstack.png);
+  background-size: 10%;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  background-color: rgb(255, 234, 167);
 }
 body .main-side-section .container .cards .card-content .added-card .remove-symbol {
   display: flex;
@@ -200,6 +220,17 @@ body .main-side-section .container .add-task-side .form .title #title {
   border: 1px solid black;
   outline: none;
   padding: 0.3rem;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+}
+body .main-side-section .container .add-task-side .form .title #title::-moz-placeholder {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  font-family: "Caveat", cursive;
+}
+body .main-side-section .container .add-task-side .form .title #title::placeholder {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  font-family: "Caveat", cursive;
 }
 body .main-side-section .container .add-task-side .form .text-area {
   display: flex;
@@ -209,6 +240,17 @@ body .main-side-section .container .add-task-side .form .text-area #text-area {
   resize: none;
   border-radius: 0.32rem;
   padding: 0.3rem;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+}
+body .main-side-section .container .add-task-side .form .text-area #text-area::-moz-placeholder {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  font-family: "Caveat", cursive;
+}
+body .main-side-section .container .add-task-side .form .text-area #text-area::placeholder {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  font-family: "Caveat", cursive;
 }
 body .main-side-section .container .add-task-side .form .add-button #add-button {
   min-width: 6rem;
