@@ -20,6 +20,31 @@ const toDoTaskArray = localStorageTasksToDo;
 const doneArray = localStorageTasksDone;
 let removedArray = localStorageRemoved;
 
+const enableEdit = (element, task, property) => {
+  element.contentEditable = true;
+  element.focus();
+
+  const handleEdit = () => {
+    element.contentEditable = false;
+    element.removeEventListener("blur", handleEdit);
+    document.removeEventListener("keydown", handleKeyDown);
+    task[property] = element.innerText;
+
+    localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
+    localStorage.setItem("doneArray", JSON.stringify(doneArray));
+    localStorage.setItem("removedArray", JSON.stringify(removedArray));
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      handleEdit();
+    }
+  };
+
+  element.addEventListener("blur", handleEdit);
+  document.addEventListener("keydown", handleKeyDown);
+};
+
 const createCard = (task, container) => {
   const addDivCard = document.createElement("div");
   addDivCard.classList.add("added-card");
@@ -37,10 +62,21 @@ const createCard = (task, container) => {
   const titleParagraph = document.createElement("p");
   const addCardTitle = task.title;
   titleParagraph.innerText = addCardTitle;
+  titleParagraph.addEventListener("dblclick", () =>
+    enableEdit(titleParagraph, task, "title")
+  );
 
   const descriptionParagraph = document.createElement("p");
   const addCardDescription = task.description;
   descriptionParagraph.innerText = addCardDescription;
+  descriptionParagraph.addEventListener("dblclick", () =>
+    enableEdit(descriptionParagraph, task, "description")
+  );
+
+  const dateParagraph = document.createElement("p");
+  dateParagraph.classList.add("added-date");
+  const addCardDate = task.creationDate;
+  dateParagraph.innerText = addCardDate;
 
   const buttonDiv = document.createElement("div");
   buttonDiv.classList.add("bottom-circle");
@@ -65,7 +101,7 @@ const createCard = (task, container) => {
   );
   cardTitleDiv.append(titleParagraph);
   addSymbolRemoveDiv.append(addSymbolRemoveImage);
-  buttonDiv.append(statusButton, colorDiv);
+  buttonDiv.append(statusButton, dateParagraph, colorDiv);
   statusButton.append(buttonParagraph);
 
   if (task.isDone === true) {
@@ -75,9 +111,11 @@ const createCard = (task, container) => {
   }
 
   if (container === doneCard) {
-    buttonDiv.addEventListener("click", () => moveCardToInProgress(task));
+    statusButton.addEventListener("click", () => moveCardToInProgress(task));
+    colorDiv.addEventListener("click", () => moveCardToInProgress(task));
   } else {
-    buttonDiv.addEventListener("click", () => moveCardToDone(task));
+    statusButton.addEventListener("click", () => moveCardToDone(task));
+    colorDiv.addEventListener("click", () => moveCardToDone(task));
   }
 
   localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
@@ -97,18 +135,25 @@ const createRemovedCard = (task) => {
 
   const wrapImage = document.createElement("img");
   wrapImage.src = "./assets/arrow_direction_down_navigation_icon.svg";
+  wrapImage.addEventListener("click", () => {
+    descriptionParagraph.style.display =
+      descriptionParagraph.style.display === "none" ? "block" : "none";
+  });
 
   const modifyDiv = document.createElement("div");
   modifyDiv.classList.add("modify");
 
   const undoImage = document.createElement("img");
   undoImage.src = "./assets/arrow_next_right_icon.svg";
+  undoImage.addEventListener("click", () =>
+    moveCardBackToItPlace(task, removedCardList)
+  );
 
   const deleteImage = document.createElement("img");
   deleteImage.src = "./assets/forever-remove_icon.svg";
   deleteImage.addEventListener("click", () =>
     removeCard(task, removedCardList)
-  ); // find out how to delete it - permanent
+  );
 
   const cardTitleDiv = document.createElement("div");
   cardTitleDiv.classList.add("card-title");
@@ -120,6 +165,7 @@ const createRemovedCard = (task) => {
   const descriptionParagraph = document.createElement("p");
   const addCardDescription = task.description;
   descriptionParagraph.innerText = addCardDescription;
+  descriptionParagraph.style.display = "none";
 
   removedCardContainer.append(
     addSymbolRemoveDiv,
@@ -135,14 +181,26 @@ const createRemovedCard = (task) => {
 };
 
 const addCardFunc = () => {
+  const currentDate = new Date();
+
+  const formattedDate = currentDate.toLocaleDateString("lt-LT", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
   const taskObj = {
     title: cardTitle.value,
     description: cardDescription.value,
     isDone: false,
-    creationDate: "",
+    creationDate: formattedDate,
   };
 
-  if (taskObj.title.length + 1 > 3) {
+  if (taskObj.title.length >= 3) {
     toDoTaskArray.push(taskObj);
     inProgressCard.innerHTML = "";
     toDoTaskArray.forEach((task) => createCard(task, inProgressCard));
@@ -250,6 +308,36 @@ const moveCardToInProgress = (task) => {
     doneCard.innerHTML = "";
 
     // toDoTaskArray.reverse().forEach((task) => createCard(task, inProgressCard)); reverse method
+    toDoTaskArray.forEach((task) => createCard(task, inProgressCard));
+    doneArray.forEach((task) => createCard(task, doneCard));
+  }
+};
+
+const moveCardBackToItPlace = (task) => {
+  const findIndexRemoved = removedArray.findIndex(
+    (t) => t.title === task.title
+  );
+
+  console.log(task.isDone);
+
+  if (findIndexRemoved !== -1) {
+    if (task.isDone === false) {
+      toDoTaskArray.push(removedArray[findIndexRemoved]);
+      removedArray.splice(findIndexRemoved, 1);
+    } else {
+      doneArray.push(removedArray[findIndexRemoved]);
+      removedArray.splice(findIndexRemoved, 1);
+    }
+
+    localStorage.setItem("removedArray", JSON.stringify(removedArray));
+    localStorage.setItem("toDoTaskArray", JSON.stringify(toDoTaskArray));
+    localStorage.setItem("doneArray", JSON.stringify(doneArray));
+
+    inProgressCard.innerHTML = "";
+    removedCardList.innerHTML = "";
+    doneCard.innerHTML = "";
+
+    removedArray.forEach((task) => createRemovedCard(task, removedCardList));
     toDoTaskArray.forEach((task) => createCard(task, inProgressCard));
     doneArray.forEach((task) => createCard(task, doneCard));
   }

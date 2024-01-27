@@ -24,7 +24,7 @@ body {
   letter-spacing: 0.15rem;
   font-family: "Caveat", cursive;
   background-image: url(./assets/sl_072622_51930_13.jpg);
-  background-size: 35%;
+  background-size: 31%;
   z-index: -1;
 }
 body .main-side-section {
@@ -151,11 +151,11 @@ body .main-side-section .container .cards .card-content .added-card .card-title 
   max-width: 21.206rem;
   font-size: 1.2rem;
   font-weight: 700;
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 body .main-side-section .container .cards .card-content .added-card p {
   text-align: justify;
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 body .main-side-section .container .cards .card-content .added-card .bottom-circle {
   display: flex;
@@ -181,9 +181,17 @@ body .main-side-section .container .cards .card-content .added-card .bottom-circ
   font-weight: 400;
   font-family: "Caveat", cursive;
   padding: 0;
+  margin: 0;
 }
 body .main-side-section .container .cards .card-content .added-card .bottom-circle button .button-paragraph:hover {
   font-weight: bold;
+}
+body .main-side-section .container .cards .card-content .added-card .bottom-circle .added-date {
+  align-self: flex-end;
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+  padding: 0;
+  margin: 0;
 }
 body .main-side-section .container .cards .card-content .added-card .bottom-circle .color-check-red {
   height: 2rem;
